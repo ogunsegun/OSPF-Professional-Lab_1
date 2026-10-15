@@ -12,10 +12,15 @@ Advanced OSPF configurations, focusing on path preference, load balancing, and L
 Note that:
 
 There are ten OSPF routers, nine of which will participate in OSPF.
+
 There are two switches, SW1 and SW2.
+
 There is a single host device, H1, in Area 2.
+
 There is a single connection to the Internet made via R1.
+
 There are four OSPF Areas: 0, 2, 3, and 51.
+
 There is a discontiguous backbone Area 0.
 
 
@@ -27,11 +32,16 @@ Area 0 / Area 51 Border Routers
 Router 1 (R1) — Backbone Hub & Internet Gateway
 
 • Router ID: 1.1.1.1
+
 • Interfaces: Loopback0 (Area 0), GE0/0/0 (Area 0). Note: GE0/0/3 is the Internet link and is kept outside of OSPF.
 ios
+
 router ospf 1
+
  router-id 1.1.1.1
+ 
  passive-interface Loopback0
+ 
  network 1.1.1.1 0.0.0.0 area 0
  network 20.20.20.0 0.0.0.255 area 0
 !
