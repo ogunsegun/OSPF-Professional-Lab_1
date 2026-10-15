@@ -1,8 +1,0 @@
-As you embark on this design, you will configure OSPF to meet the needs of the growing network. Your work will include:
-
-Basic OSPF setups, advertising networks, adjusting costs, and implementing authentication and security measures.
-Establishing OSPF neighbor adjacencies, fine-tuning router IDs, and managing DR/BDR elections along with hello and dead intervals.
-Addressing the nuances of different network types.
-Developing a multi-area OSPF topology, incorporating various stub configurations and virtual links.
-Utilizing OSPFv3 to support a planned expansion using IPv6.
-Advanced OSPF configurations, focusing on path preference, load balancing, and LSA filtering and distribute lists.
