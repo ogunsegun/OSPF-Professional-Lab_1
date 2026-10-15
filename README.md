@@ -23,6 +23,7 @@ There are four OSPF Areas: 0, 2, 3, and 51.
 
 There is a discontiguous backbone Area 0.
 
+<img src="topo.jpeg">
 
 ### OSPF CONFIGURATIONS ON HUAWEI ROUTER:
 
