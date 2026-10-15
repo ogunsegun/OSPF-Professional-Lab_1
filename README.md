@@ -26,50 +26,50 @@ There is a discontiguous backbone Area 0.
 
 ### OSPF CONFIGURATIONS ON HUAWEI ROUTER:
 
-Area 0 / Area 51 Border Routers
+```
+🟡 Area 0 / Area 51 Border Routers
 
 
 Router 1 (R1) — Backbone Hub & Internet Gateway
 
-• Router ID: 1.1.1.1
 
-• Interfaces: Loopback0 (Area 0), GE0/0/0 (Area 0). Note: GE0/0/3 is the Internet link and is kept outside of OSPF.
-ios
-
-router ospf 1
-
- router-id 1.1.1.1
- 
- passive-interface Loopback0
- 
- network 1.1.1.1 0.0.0.0 area 0
- network 20.20.20.0 0.0.0.255 area 0
-!
-ip route 0.0.0.0 0.0.0.0 203.0.113.2
-router ospf 1
- default-information originate
+[R1] ospf 1 router-id 1.1.1.1
+[R1-ospf-1] silent-interface LoopBack0
+[R1-ospf-1] area 0.0.0.0
+[R1-ospf-1-area-0.0.0.0] network 1.1.1.1 0.0.0.0
+[R1-ospf-1-area-0.0.0.0] network 20.20.20.0 0.0.0.255
+[R1-ospf-1-area-0.0.0.0] quit
+[R1-ospf-1] default-route-advertise always
+[R1-ospf-1] quit
+[R1] ip route-static 0.0.0.0 0.0.0.0 203.0.113.2
 Use code with caution.
 
 Router 2 (R2) — ABR (Area 0 / Area 51)
 
-ios
-router ospf 1
- router-id 2.2.2.2
- passive-interface Loopback0
- network 2.2.2.2 0.0.0.0 area 0
- network 20.20.20.0 0.0.0.255 area 0
- network 192.168.2.0 0.0.0.255 area 51
+huawei
+[R2] ospf 1 router-id 2.2.2.2
+[R2-ospf-1] silent-interface LoopBack0
+[R2-ospf-1] area 0.0.0.0
+[R2-ospf-1-area-0.0.0.0] network 2.2.2.2 0.0.0.0
+[R2-ospf-1-area-0.0.0.0] network 20.20.20.0 0.0.0.255
+[R2-ospf-1-area-0.0.0.0] quit
+[R2-ospf-1] area 0.0.0.51
+[R2-ospf-1-area-0.0.0.51] network 192.168.2.0 0.0.0.255
+[R2-ospf-1-area-0.0.0.51] quit
 Use code with caution.
 
 Router 4 (R4) — ABR (Area 0 / Area 51)
 
-ios
-router ospf 1
- router-id 4.4.4.4
- passive-interface Loopback0
- network 4.4.4.4 0.0.0.0 area 0
- network 20.20.20.0 0.0.0.255 area 0
- network 192.168.1.0 0.0.0.255 area 51
+huawei
+[R4] ospf 1 router-id 4.4.4.4
+[R4-ospf-1] silent-interface LoopBack0
+[R4-ospf-1] area 0.0.0.0
+[R4-ospf-1-area-0.0.0.0] network 4.4.4.4 0.0.0.0
+[R4-ospf-1-area-0.0.0.0] network 20.20.20.0 0.0.0.255
+[R4-ospf-1-area-0.0.0.0] quit
+[R4-ospf-1] area 0.0.0.51
+[R4-ospf-1-area-0.0.0.51] network 192.168.1.0 0.0.0.255
+[R4-ospf-1-area-0.0.0.51] quit
 Use code with caution.
 
 🔵 Area 51 Internal Routers
@@ -77,27 +77,31 @@ Use code with caution.
 
 Router 5 (R5) — Internal Area 51 Router
 
-ios
-router ospf 1
- router-id 5.5.5.5
- passive-interface Loopback0
- network 5.5.5.5 0.0.0.0 area 51
- network 192.168.1.0 0.0.0.255 area 51
- network 192.168.2.0 0.0.0.255 area 51
- network 192.168.20.0 0.0.0.255 area 51
+huawei
+[R5] ospf 1 router-id 5.5.5.5
+[R5-ospf-1] silent-interface LoopBack0
+[R5-ospf-1] area 0.0.0.51
+[R5-ospf-1-area-0.0.0.51] network 5.5.5.5 0.0.0.0
+[R5-ospf-1-area-0.0.0.51] network 192.168.1.0 0.0.0.255
+[R5-ospf-1-area-0.0.0.51] network 192.168.2.0 0.0.0.255
+[R5-ospf-1-area-0.0.0.51] network 192.168.20.0 0.0.0.255
+[R5-ospf-1-area-0.0.0.51] quit
 Use code with caution.
 
 Router 6 (R6) — Internal Area 51 Router
 
-ios
-router ospf 1
- router-id 6.6.6.6
- passive-interface range 172.16.10.0 255.255.252.0
- network 6.6.6.6 0.0.0.0 area 51
- network 192.168.20.0 0.0.0.255 area 51
- network 172.16.10.0 0.0.0.255 area 51
- network 172.16.11.0 0.0.0.255 area 51
- network 172.16.12.0 0.0.0.255 area 51
+huawei
+[R6] ospf 1 router-id 6.6.6.6
+[R6-ospf-1] silent-interface LoopBack1
+[R6-ospf-1] silent-interface LoopBack2
+[R6-ospf-1] silent-interface LoopBack3
+[R6-ospf-1] area 0.0.0.51
+[R6-ospf-1-area-0.0.0.51] network 6.6.6.6 0.0.0.0
+[R6-ospf-1-area-0.0.0.51] network 192.168.20.0 0.0.0.255
+[R6-ospf-1-area-0.0.0.51] network 172.16.10.0 0.0.0.255
+[R6-ospf-1-area-0.0.0.51] network 172.16.11.0 0.0.0.255
+[R6-ospf-1-area-0.0.0.51] network 172.16.12.0 0.0.0.255
+[R6-ospf-1-area-0.0.0.51] quit
 Use code with caution.
 
 🟢🟫 Multi-Area Core Router
@@ -105,14 +109,19 @@ Use code with caution.
 
 Router 3 (R3) — ABR (Area 0 / Area 2 / Area 3)
 
-ios
-router ospf 1
- router-id 3.3.3.3
- passive-interface Loopback0
- network 3.3.3.3 0.0.0.0 area 0
- network 20.20.20.0 0.0.0.255 area 0
- network 192.168.6.0 0.0.0.255 area 2
- network 192.168.3.0 0.0.0.255 area 3
+huawei
+[R3] ospf 1 router-id 3.3.3.3
+[R3-ospf-1] silent-interface LoopBack0
+[R3-ospf-1] area 0.0.0.0
+[R3-ospf-1-area-0.0.0.0] network 3.3.3.3 0.0.0.0
+[R3-ospf-1-area-0.0.0.0] network 20.20.20.0 0.0.0.255
+[R3-ospf-1-area-0.0.0.0] quit
+[R3-ospf-1] area 0.0.0.2
+[R3-ospf-1-area-0.0.0.2] network 192.168.6.0 0.0.0.255
+[R3-ospf-1-area-0.0.0.2] quit
+[R3-ospf-1] area 0.0.0.3
+[R3-ospf-1-area-0.0.0.3] network 192.168.3.0 0.0.0.255
+[R3-ospf-1-area-0.0.0.3] quit
 Use code with caution.
 
 🟫 Area 3 Internal Routers
@@ -120,22 +129,24 @@ Use code with caution.
 
 Router 9 (R9) — Internal Area 3 Router
 
-ios
-router ospf 1
- router-id 9.9.9.9
- passive-interface Loopback0
- network 9.9.9.9 0.0.0.0 area 3
- network 192.168.3.0 0.0.0.255 area 3
+huawei
+[R9] ospf 1 router-id 9.9.9.9
+[R9-ospf-1] silent-interface LoopBack0
+[R9-ospf-1] area 0.0.0.3
+[R9-ospf-1-area-0.0.0.3] network 9.9.9.9 0.0.0.0
+[R9-ospf-1-area-0.0.0.3] network 192.168.3.0 0.0.0.255
+[R9-ospf-1-area-0.0.0.3] quit
 Use code with caution.
 
 Router 10 (R10) — Internal Area 3 Router
 
-ios
-router ospf 1
- router-id 10.10.10.10
- passive-interface Loopback0
- network 10.10.10.10 0.0.0.0 area 3
- network 192.168.3.0 0.0.0.255 area 3
+huawei
+[R10] ospf 1 router-id 10.10.10.10
+[R10-ospf-1] silent-interface LoopBack0
+[R10-ospf-1] area 0.0.0.3
+[R10-ospf-1-area-0.0.0.3] network 10.10.10.10 0.0.0.0
+[R10-ospf-1-area-0.0.0.3] network 192.168.3.0 0.0.0.255
+[R10-ospf-1-area-0.0.0.3] quit
 Use code with caution.
 
 🟢🟡 Isolated Backbone Section (Area 2 / Area 0)
@@ -143,22 +154,27 @@ Use code with caution.
 
 Router 7 (R7) — ABR (Area 2 / Area 0 Segment)
 
-ios
-router ospf 1
- router-id 7.7.7.7
- passive-interface Ethernet0/0/1
- network 7.7.7.7 0.0.0.0 area 2
- network 192.168.6.0 0.0.0.255 area 2
- network 192.168.5.0 0.0.0.255 area 2
- network 20.20.30.0 0.0.0.255 area 0
+huawei
+[R7] ospf 1 router-id 7.7.7.7
+[R7-ospf-1] silent-interface Ethernet0/0/1
+[R7-ospf-1] area 0.0.0.2
+[R7-ospf-1-area-0.0.0.2] network 7.7.7.7 0.0.0.0
+[R7-ospf-1-area-0.0.0.2] network 192.168.5.0 0.0.0.255
+[R7-ospf-1-area-0.0.0.2] network 192.168.6.0 0.0.0.255
+[R7-ospf-1-area-0.0.0.2] quit
+[R7-ospf-1] area 0.0.0.0
+[R7-ospf-1-area-0.0.0.0] network 20.20.30.0 0.0.0.255
+[R7-ospf-1-area-0.0.0.0] quit
 Use code with caution.
 
 Router 8 (R8) — Internal Area 0 Segment Router
 
-ios
-router ospf 1
- router-id 8.8.8.8
- passive-interface Loopback0
- network 8.8.8.8 0.0.0.0 area 0
- network 20.20.30.0 0.0.0.255 area 0
-  
+huawei
+[R8] ospf 1 router-id 8.8.8.8
+[R8-ospf-1] silent-interface LoopBack0
+[R8-ospf-1] area 0.0.0.0
+[R8-ospf-1-area-0.0.0.0] network 8.8.8.8 0.0.0.0
+[R8-ospf-1-area-0.0.0.0] network 20.20.30.0 0.0.0.255
+[R8-ospf-1-area-0.0.0.0] quit
+
+```
